@@ -6,12 +6,14 @@ import io.reda.domain.Product;
 import io.reda.exceptions.InternalException;
 import io.reda.exceptions.NotFoundException;
 import io.reda.pricing.*;
+import redis.clients.jedis.Jedis;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.UUID;
 
 public class PriceRoute {
 
@@ -39,10 +41,16 @@ public class PriceRoute {
            SearchRequest search = mapper.readValue(req.body(), SearchRequest.class);
 
            SearchResponse response = price.prices(search);
+           Jedis jedis;
 
+
+           //Connecting to Redis server on localhost
+           jedis = new Jedis(System.getenv("REDIS_HOST"));
+           String uuid = UUID.randomUUID().toString();
+           jedis.set(uuid,dataToJson(response.products));
            //String response = dataToJson(price.prices(search));
            res.status(303);
-           res.header("location","http://localhost:4567/prices/search/");
+           res.header("location","http://localhost:4567/prices/search/"+uuid);
 
        }catch (Exception e){
            res.status(400);

@@ -17,6 +17,10 @@ public class RedisPrice implements Price {
     private static Jedis jedis;
 
 
+    static{
+        //Connecting to Redis server on localhost
+        jedis = new Jedis(System.getenv("REDIS_HOST"));
+    }
     @Override
     public Product get(String productId) {
         return null;
