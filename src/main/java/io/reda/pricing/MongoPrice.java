@@ -28,9 +28,10 @@ public class MongoPrice implements Price{
                 document.put("productid", String.valueOf(i));
                 document.put("price", (new Float(System.getenv("STUB_PRICE"))*i));
                 document.put("createdDate", new Date());
-                list.add(document);
+                BasicDBObject searchQuery2 = new BasicDBObject().append("productid", String.valueOf(i));
+                prices.update(searchQuery2, document,true,false);
             }
-            System.out.println(prices.insert(list));
+            
         }catch(Exception e){
             e.printStackTrace();
         }
