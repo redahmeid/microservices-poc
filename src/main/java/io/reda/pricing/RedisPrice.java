@@ -21,7 +21,9 @@ public class RedisPrice implements Price {
         //Connecting to Redis server on localhost
         //jedis = new Jedis("localhost");
         try{
-            MongoClient mongo = new MongoClient( "172.17.0.3" , 27017 );
+            // host = "172.17.0.3"
+            // port = 27017
+            MongoClient mongo = new MongoClient( System.getenv("MONGO_HOST") , new Integer(System.getenv("MONGO_PORT")) );
             db = mongo.getDB("officedepot");
             DBCollection prices = db.getCollection("prices");
             ArrayList<DBObject> list = new ArrayList<>();
