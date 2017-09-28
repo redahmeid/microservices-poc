@@ -21,12 +21,12 @@ public class MongoPrice implements Price{
             db = mongo.getDB("officedepot");
             DBCollection prices = db.getCollection("prices");
             ArrayList<DBObject> list = new ArrayList<>();
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < new Integer(System.getenv("STUB_NUMBER")); i++) {
 
                 BasicDBObject document = new BasicDBObject();
                 document.put("_id", String.valueOf(i));
                 document.put("productid", String.valueOf(i));
-                document.put("price", (2.67*i));
+                document.put("price", (new Integer(System.getenv("STUB_PRICE"))*i));
                 document.put("createdDate", new Date());
                 list.add(document);
             }
