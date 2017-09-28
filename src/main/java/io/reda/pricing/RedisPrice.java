@@ -33,6 +33,7 @@ public class RedisPrice implements Price {
 
     @Override
     public SearchResponse prices(SearchRequest request) {
+
         return null;
     }
 }

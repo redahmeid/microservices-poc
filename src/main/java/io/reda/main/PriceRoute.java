@@ -34,6 +34,29 @@ public class PriceRoute {
         return null;
     };
 
+    public static Route getPriceList = (Request req, Response res) -> {
+        Price price = new RedisPrice();
+        try{
+            Jedis jedis;
+
+
+            //Connecting to Redis server on localhost
+            jedis = new Jedis(System.getenv("REDIS_HOST"));
+
+
+            res.status(200);
+            return dataToJson(jedis.get(req.params("id")));
+
+        }catch(InternalException ie){
+            res.status(500);
+        }catch(NotFoundException nfe){
+            res.status(404);
+        }
+
+        return null;
+    };
+
+
     public static Route searchPrices = (Request req, Response res) -> {
        try {
            Price price = new MongoPrice();
