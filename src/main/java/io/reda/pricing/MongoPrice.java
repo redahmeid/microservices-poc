@@ -24,6 +24,7 @@ public class MongoPrice implements Price{
             for (int i = 0; i < 50; i++) {
 
                 BasicDBObject document = new BasicDBObject();
+                document.put("_id", String.valueOf(i));
                 document.put("productid", String.valueOf(i));
                 document.put("price", (2.67*i));
                 document.put("createdDate", new Date());
