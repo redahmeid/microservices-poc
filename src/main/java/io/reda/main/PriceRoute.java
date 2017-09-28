@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.reda.domain.Product;
 import io.reda.exceptions.InternalException;
 import io.reda.exceptions.NotFoundException;
-import io.reda.pricing.Price;
-import io.reda.pricing.RedisPrice;
-import io.reda.pricing.SearchRequest;
+import io.reda.pricing.*;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -19,7 +17,7 @@ public class PriceRoute {
 
 
     public static Route getPrice = (Request req, Response res) -> {
-        Price price = new RedisPrice();
+        Price price = new MongoPrice();
         try{
             Product product = price.get(req.params("id"));
             res.status(200);
@@ -36,17 +34,20 @@ public class PriceRoute {
 
     public static Route searchPrices = (Request req, Response res) -> {
        try {
-           Price price = new RedisPrice();
+           Price price = new MongoPrice();
            ObjectMapper mapper = new ObjectMapper();
            SearchRequest search = mapper.readValue(req.body(), SearchRequest.class);
 
+           SearchResponse response = price.prices(search);
 
            //String response = dataToJson(price.prices(search));
            res.status(303);
-           return price.get(req.params("id"));
+           res.header("location","http://localhost:4567/prices/search/");
+
        }catch (Exception e){
            res.status(400);
        }
+
        return "";
     };
 
