@@ -32,7 +32,7 @@ public class MongoPrice implements Price{
             }
             System.out.println(prices.insert(list));
         }catch(Exception e){
-
+            e.printStackTrace();
         }
 
 
