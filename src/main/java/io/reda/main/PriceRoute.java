@@ -45,7 +45,9 @@ public class PriceRoute {
 
 
             res.status(200);
-            return dataToJson(jedis.get(req.params("id")));
+            res.type("application/json");
+            res.header("location","http://localhost:4567/prices/search/"+req.params("id"));
+            return jedis.get(req.params("id"));
 
         }catch(InternalException ie){
             res.status(500);
@@ -72,8 +74,8 @@ public class PriceRoute {
            String uuid = UUID.randomUUID().toString();
            jedis.set(uuid,dataToJson(response.products));
            //String response = dataToJson(price.prices(search));
-           res.status(303);
-           res.header("location","http://localhost:4567/prices/search/"+uuid);
+
+           res.redirect("http://localhost:4567/prices/search/"+uuid);
 
        }catch (Exception e){
            e.printStackTrace();
