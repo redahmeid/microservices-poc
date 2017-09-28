@@ -53,6 +53,7 @@ public class PriceRoute {
            res.header("location","http://localhost:4567/prices/search/"+uuid);
 
        }catch (Exception e){
+           e.printStackTrace();
            res.status(400);
        }
 
