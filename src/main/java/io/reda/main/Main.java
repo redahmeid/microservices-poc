@@ -8,7 +8,7 @@ public class Main {
 
         get("/hello", (req, res) -> "Hello World");
         get("/prices/:id", PriceRoute.getPrice  );
-        //post("/prices/search",)
+        post("/prices/search",PriceRoute.searchPrices);
     }
 
 
