@@ -61,11 +61,14 @@ public class PriceRoute {
 
     public static Route searchPrices = (Request req, Response res) -> {
        try {
+           System.out.println("Inside search prices");
            Price price = new MongoPrice();
            ObjectMapper mapper = new ObjectMapper();
            SearchRequest search = mapper.readValue(req.body(), SearchRequest.class);
 
            SearchResponse response = price.prices(search);
+           System.out.println("Retrieved Prices");
+
            Jedis jedis;
 
 

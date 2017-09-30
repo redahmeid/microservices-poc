@@ -31,7 +31,7 @@ public class MongoPrice implements Price{
                 BasicDBObject searchQuery2 = new BasicDBObject().append("productid", String.valueOf(i));
                 prices.update(searchQuery2, document,true,false);
             }
-            
+
         }catch(Exception e){
             e.printStackTrace();
         }
